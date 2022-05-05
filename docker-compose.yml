@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  api-php:
+    build: .
+    command: php -S api-php:8000 -t public 
+    container_name: api-php
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor/
+    ports:
+      - "8000:8000"
+    restart: always
+    depends_on:
+      - mysql
+
+  mysql:
+    env_file: .env
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
