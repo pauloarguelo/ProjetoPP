@@ -5,10 +5,12 @@ services:
     command: php -S api-php:8000 -t public 
     container_name: api-php
     volumes:
-      - .:/var/www/html
-      - /var/www/html/vendor/
+      - .:/app
+      - /app/vendor/
     ports:
       - "8000:8000"
+    networks:
+      - net-pp
     restart: always
     depends_on:
       - mysql
@@ -25,3 +27,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
+    networks:
+      - net-pp
+networks:
+  net-pp:
+    driver: bridge

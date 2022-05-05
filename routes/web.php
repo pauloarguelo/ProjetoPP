@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,6 +15,9 @@
 |
 */
 
+
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+   // return 'Projeto PP - Versão 0.0.0.1';
+
+   return User::all();
 });

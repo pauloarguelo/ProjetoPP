@@ -11,7 +11,7 @@ RUN apt-get install -y \
         libpq-dev \
         zip \
   && docker-php-ext-install zip \
-  && docker-php-ext-install pdo pdo_pgsql pgsql
+  && docker-php-ext-install mysqli pdo pdo_mysql
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY . .
