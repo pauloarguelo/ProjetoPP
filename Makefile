@@ -14,3 +14,5 @@ bash:
 	docker exec -it api-php /bin/bash
 apidoc:
 	apidoc -i app -o public/doc
+ps:
+	docker-compose ps

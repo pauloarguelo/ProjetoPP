@@ -32,6 +32,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
+    /**
+     * Validation Rules for the model.
+     * 
+     * @var string[]
+     */
+    protected array $rules = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:6|confirmed',
+        'document' => 'required|string|max:255|unique:users',
+        'user_category_id' => 'required|integer|exists:user_categories,id',
+    ];
+
     public function wallet(){
         return $this->hasOne(Wallet::class);    
     }
