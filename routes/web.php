@@ -17,10 +17,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
+
 $router->get('/', function () use ($router) {
    // return 'Projeto PP - Versão 0.0.0.1';
    return User::with('wallet')->where('id', 1)->get();	
 });
+
+$router->group (['prefix' => 'apidoc'], function () use ($router) {      
+      $router->get('', function () {
+            return redirect('doc/index.html');
+      });
+});
+
 
 $router->group (['prefix' => 'auth'], function () use ($router) {
       $router->post('/login', 'AuthController@login');

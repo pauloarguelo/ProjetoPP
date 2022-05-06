@@ -5,6 +5,12 @@
 3. MySQL 
 
 
+## Apidoc
+
+```
+npm install apidoc -g
+```
+
 ## commandos make 
 ```
 make build
