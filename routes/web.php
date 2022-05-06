@@ -3,6 +3,8 @@
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,16 @@ use App\Models\User;
 |
 */
 
-
 $router->get('/', function () use ($router) {
    // return 'Projeto PP - Versão 0.0.0.1';
-
-   return User::all();
+   return User::with('wallet')->where('id', 1)->get();	
 });
+
+$router->group (['prefix' => 'auth'], function () use ($router) {
+      $router->post('/login', 'AuthController@login');
+});
+
+$router->group (['prefix' => 'auth', 'middleware' => 'auth'], function () use ($router) {
+      $router->get('/me', 'AuthController@me');
+});
+

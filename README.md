@@ -5,8 +5,19 @@
 3. MySQL 
 
 
+## commandos make 
+```
+make build
+make up
+make stop
+make bash
+```
 
 ## Artisan
+```
+php artisan make:migration create_users_table --create=users
+php artisan make:seeder UsersSeeder
 
-php artisan make:migration create_courses_table --create=courses
-php artisan make:seeder CoursesTableSeeder
+php artisan migrate:fresh --seed
+
+```

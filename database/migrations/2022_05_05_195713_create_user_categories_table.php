@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_categories', function (Blueprint $table) {
-            $table->id('id');
+            $table->id();
             $table->string('description');
             $table->boolean('status');
             $table->timestamps();
