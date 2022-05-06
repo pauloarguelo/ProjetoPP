@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\V1\Controllers;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /**
      * Create a new AuthController instance.
