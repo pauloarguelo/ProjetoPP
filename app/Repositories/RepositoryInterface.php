@@ -16,7 +16,7 @@ interface RepositoryInterface
      * @param int $id
      * @return array
      */
-    public function findById($id): array;
+    public function findById(int $id): array;
 
     /**
      * Create a new register.
@@ -30,7 +30,7 @@ interface RepositoryInterface
      * @param int $id
      * @return bool
      */
-    public function update($id, array $data) : bool;
+    public function update(int $id, array $data) : bool;
 
     /**
      * Delete a register.
