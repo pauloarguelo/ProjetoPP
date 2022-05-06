@@ -18,12 +18,12 @@ class UserCategories extends Seeder
     public function run()
     {
         DB::table('user_categories')->insert([
-            'description' => 'Pessoa Física',
+            'description' => 'Private Person',
             'status' => true            
         ]);
 
         DB::table('user_categories')->insert([
-            'description' => 'Lojista',
+            'description' => 'Juridical Person',
             'status' => true            
         ]);
         
