@@ -16,16 +16,16 @@ class AvailableBalanceValidator implements ValidatorInterface
     {
         Validator::extend('availableBalance', function ($attribute, $value, $parameters, $validator) {
             $amountNecessary = $validator->getData()[$parameters[0]];
-            $teste = App::make(WalletService::class)->findByParam('user_id', $value);
+            $test = App::make(WalletService::class)->findByParam('user_id', $value);
             
-            if (empty($teste) || floatval($teste["balance"]) < floatval($amountNecessary)) {
+            if (empty($test) || floatval($test["balance"]) < floatval($amountNecessary)) {
                 return false;
             }
             return true;
         });
 
         Validator::replacer('availableBalance', function ($message, $attribute, $rule, $parameters) {
-            return str_replace(':attribute', $attribute, "You don't have enought balance to make this transaction.");
+            return str_replace(':attribute', $attribute, "Payer don't have enought balance to make this transaction.");
         });
     }
 }

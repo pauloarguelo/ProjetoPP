@@ -89,7 +89,7 @@ class TransactionService
 
         $rules = [
             'amount' => 'required|numeric|min:0.1',	    
-            'payer' => 'required|integer|exists:users,id|availableBalance:amount',
+            'payer' => 'required|integer|exists:users,id|availableBalance:amount|validPermission',
             'payee' => 'required|integer|different:payer|exists:users,id',
             'description' => 'nullable|string|max:255',	
         ];
