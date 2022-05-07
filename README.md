@@ -11,6 +11,10 @@
 npm install apidoc -g
 ```
 
+## Adminer - Mysql
+
+http://localhost:8080
+
 ## commandos make 
 ```
 make build

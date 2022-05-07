@@ -25,10 +25,17 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3306:3306"
     networks:
       - net-pp
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - net-pp
+
 networks:
   net-pp:
     driver: bridge

@@ -18,10 +18,8 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-
 $router->get('/', function () use ($router) {
-   // return 'Projeto PP - Versão 0.0.0.1';
-   return User::with('wallet')->where('id', 1)->get();	
+      return 'Projeto PP - Version 1.0';   
 });
 
 $router->group (['prefix' => 'apidoc'], function () use ($router) {      
@@ -30,12 +28,19 @@ $router->group (['prefix' => 'apidoc'], function () use ($router) {
       });
 });
 
-
-$router->group (['prefix' => 'auth'], function () use ($router) {
+$router->group (['prefix' => 'api/v1/auth', 'namespace' => 'V1'], function () use ($router) {
       $router->post('/login', 'AuthController@login');
+      $router->post('/register', 'AuthController@register');
 });
 
-$router->group (['prefix' => 'auth', 'middleware' => 'auth'], function () use ($router) {
+$router->group (['prefix' => 'api/v1/auth', 'namespace' => 'V1', 'middleware' => 'auth' ], function () use ($router) {
       $router->get('/me', 'AuthController@me');
 });
+
+
+$router->group (['prefix' => 'api/v1/transaction', 'namespace' => 'V1', 'middleware' => 'auth' ], function () use ($router) {
+      $router->post('/deposit', 'TransactionController@deposit');
+});
+
+
 

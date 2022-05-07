@@ -1,24 +1,59 @@
 <?php
 
-namespace App\Http\V1\Controllers;
-use Laravel\Lumen\Routing\Controller as BaseController;
+namespace App\Http\Controllers\V1;
 
-class AuthController extends BaseController
+use App\Exceptions\ValidationException;
+use App\Http\Controllers\Controller;
+use App\Services\UserService;
+use Illuminate\Http\Request;
+
+
+class AuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
+    public function __construct(UserService $service)
+    {   
+        parent::__construct($service);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**
-     * Get a JWT via given credentials.
+     * 
+     * @api {post} /auth/login Login
+     * @apiVersion 1.0.0
+     * @apiName Login
+     * @apiGroup Auth
+     * 
+     * @apiDescription Login
+     * 
+     * @apiSampleRequest /api/v1/auth/login
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @apiParam {String} [email] The user email.
+     * @apiParam {String} [password] The user password.
+     * 
+     * @apiParamExample {json} Request-Example:
+     *           {
+     *               "email":"paulo@teste.com",
+     *               "password": "secret"
+     *           }            
+     *
+     * @apiSuccess {Object} JWT with given credentials
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE2NTE4NzIwNjUsImV4cCI6MTY1MTg3NTY2NSwibmJmIjoxNjUxODcyMDY1LCJqdGkiOiJwNWdYRDN1S0t2WlhiY3N5Iiwic3ViIjoiNTEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.j0GEtCnWQE0jkVvQIuprXthufHEwyHJJHPRDhnu-uWc",
+     *       "token_type": "bearer",
+     *       "expires_in": 3600
+     *     }
+     *
+     * @apiError Unauthorized Login failed.
+     *
+     * 
      */
     public function login()
     {    
@@ -33,37 +68,68 @@ class AuthController extends BaseController
 
     /**
      * 
-     * @api {get} /user/:id Request User information
-     * @apiName GetUser
-     * @apiGroup User
+     * @api {get} /auth/me Me
+     * @apiVersion 1.0.0
+     * @apiName Me
+     * @apiGroup Auth
      *
-     * @apiParam {Number} id Users unique ID.
-     *
-     * @apiSuccess {String} firstname Firstname of the User.
-     * @apiSuccess {String} lastname  Lastname of the User.
-     *
+     * @apiDescription Return the authenticated user
+     * 
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
-     *     {
-     *       "firstname": "John",
-     *       "lastname": "Doe"
-     *     }
+     *      {
+     *          "id": 51,
+     *          "name": "Paulo",
+     *          "email": "paulo@teste.com",
+     *          "document": "09420900045",
+     *          "user_category_id": 1,
+     *          "created_at": "2022-05-06T23:50:29.000000Z",
+     *          "updated_at": "2022-05-06T23:50:29.000000Z"
+     *      }
      *
-     * @apiError UserNotFound The id of the User was not found.
-     *
-     * @apiErrorExample Error-Response:
-     *     HTTP/1.1 404 Not Found
-     *     {
-     *       "error": "UserNotFound"
-     *     }
-     *
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     *  
+     * 
      */
     public function me()
     {
         return response()->json(auth()->user());
+    }
+
+    /**
+     * @api {post} /auth/register Register
+     * @apiName Register
+     * @apiGroup Auth
+     * 
+     * @apiDescription Register a new user
+     * 
+     * @apiSampleRequest /api/v1/auth/register
+     * 
+     * @apiParam {String} name The user name.
+     * @apiParam {String} email The user email.
+     * @apiParam {String} password The user password.
+     * @apiParam {String} document The user document.
+     * @apiParam {Integer} user_category_id The user category id.
+     * 
+     * @apiParamExample {json} Request-Example:
+     *           {
+     *               "email":"paulo@teste.com",
+     *               "password": "secret",
+     *               "name": "Paulo",
+     *               "document": "09420900045",
+     *               "user_category_id": 1
+     *           }            
+     *
+     */
+    public function register(Request $request)
+    {               
+        try {
+            if($this->service->validateRegisterNewUser($request->all())){
+                $this->service->registerUser($request->all());
+            }  
+        } catch (ValidationException $e) {   
+            return response()->json(['error' => $e->getMessage()], 400);
+        }   
+
     }
 
     /**
@@ -73,8 +139,6 @@ class AuthController extends BaseController
      */
     public function logout()
     {
-        auth()->logout();
-
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -85,7 +149,7 @@ class AuthController extends BaseController
      */
     public function refresh()
     {
-        //return $this->respondWithToken(auth()->refresh());
+        // TODO: Need to refresh the token
     }
 
     /**
