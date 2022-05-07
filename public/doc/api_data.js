@@ -134,6 +134,13 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "password_confirmation",
+            "description": "<p>The user password confirmation.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "document",
             "description": "<p>The user document.</p>"
           },
@@ -142,14 +149,14 @@ define({ "api": [
             "type": "Integer",
             "optional": false,
             "field": "user_category_id",
-            "description": "<p>The user category id.</p>"
+            "description": "<p>The user category id (1 - Personal, 2 - Jurical).</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"email\":\"paulo@teste.com\",\n    \"password\": \"secret\",\n    \"name\": \"Paulo\",\n    \"document\": \"09420900045\",\n    \"user_category_id\": 1\n}",
+          "content": "{\n    \"email\":\"paulo@teste.com\",\n    \"password\": \"secret\",\n    \"password_confirmation\": \"secret\",\n    \"name\": \"Paulo\",\n    \"document\": \"09420900045\",\n    \"user_category_id\": 1\n}",
           "type": "json"
         }
       ]
@@ -157,5 +164,62 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "app/Http/Controllers/V1/AuthController.php",
     "groupTitle": "Auth"
+  },
+  {
+    "type": "post",
+    "url": "/transaction",
+    "title": "Transaction",
+    "name": "Transaction",
+    "group": "Transaction",
+    "description": "<p>Create a new transaction. Requires authentication.</p>",
+    "sampleRequest": [
+      {
+        "url": "/api/v1/transaction"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "amount",
+            "description": "<p>The transaction amount.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": "<p>The transaction description.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "payer_id",
+            "description": "<p>The transaction payer id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "payee_id",
+            "description": "<p>The transaction payee id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n   \"amount\" : 10.50,\n   \"payer\" : 11,\n   \"payee\" : 2,\n   \"description\" : \"Peace of Cake\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/Http/Controllers/V1/TransactionController.php",
+    "groupTitle": "Transaction"
   }
 ] });

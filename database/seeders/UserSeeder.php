@@ -44,8 +44,8 @@ class UserSeeder extends Seeder
        
 
         User::factory()->create([
-            'name' => 'Padaria',
-            'email' => 'padaria@teste.com',
+            'name' => 'Grocery store',
+            'email' => 'grocery-store@teste.com',
             'document' => '31891035000191',
             'password' => Hash::make('secret'),
             'user_category_id' => 2

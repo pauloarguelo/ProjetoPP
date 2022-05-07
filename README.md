@@ -23,6 +23,12 @@ make stop
 make bash
 ```
 
+## Notification Queue
+
+```
+make queue 
+```
+
 ## Artisan
 ```
 php artisan make:migration create_users_table --create=users

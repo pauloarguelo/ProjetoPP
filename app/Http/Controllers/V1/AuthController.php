@@ -115,7 +115,7 @@ class AuthController extends BaseController
      * @apiParam {String} password The user password.
      * @apiParam {String} password_confirmation The user password confirmation.
      * @apiParam {String} document The user document.
-     * @apiParam {Integer} user_category_id The user category id.
+     * @apiParam {Integer} user_category_id The user category id (1 - Personal, 2 - Jurical).
      * 
      * @apiParamExample {json} Request-Example:
      *           {
