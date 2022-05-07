@@ -12,6 +12,7 @@ use App\Services\Wallet\WalletService;
 use \Exception;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -69,7 +70,7 @@ class TransactionService
             
                $result = $this->repository->create($data);
 
-               dispatch(new SendNotificationEmail($result))->onQueue('emails');
+               Queue::push(new SendNotificationEmail());
                
                DB::commit();
 

@@ -16,3 +16,5 @@ apidoc:
 	apidoc -i app -o public/doc
 ps:
 	docker-compose ps
+queue:
+	docker-compose exec api-php php /app/artisan queue:work

@@ -2,21 +2,21 @@
 
 namespace App\Jobs;
 
+use App\Exceptions\ExternalRequestException;
 use App\Services\External\ExternalNotifier;
 
 class SendNotificationEmail extends Job
-{   
-    
+{
     protected $data;
 
     /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
+    * Create a new job instance.
+    *
+    * @return void
+    */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->data;
     }
 
     /**
@@ -26,10 +26,11 @@ class SendNotificationEmail extends Job
      */
     public function handle()
     {
-         $result = new ExternalNotifier();
-         if($result->request()){
-             return true;
-         }
-         return false;
+        $request = new ExternalNotifier();
+        if ($request->request() != 200) {
+            throw new ExternalRequestException('External request failed.');
+        }
+                
+        return true;
     }
 }

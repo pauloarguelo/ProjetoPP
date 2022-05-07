@@ -29,6 +29,7 @@ services:
       - net-pp
     ports:
       - 3306:3306
+
   adminer:
     image: adminer
     restart: always
@@ -36,6 +37,18 @@ services:
       - 8080:8080
     networks:
       - net-pp
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5673:5672
+      - 15673:15672
+    # volumes:
+    #   - ./rabbitmq/data/:/var/lib/rabbitmq/
+    #   - ./rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - net-pp
 
 networks:
   net-pp:
