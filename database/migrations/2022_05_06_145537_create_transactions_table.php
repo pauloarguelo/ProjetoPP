@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('payer')->unsigned();
-            $table->bigInteger('payee')->unsigned();
-            $table->bigInteger('transaction_category_id')->unsigned();
-            $table->float('value', 10, 2);
+            $table->bigInteger('wallet_payer_id')->unsigned();
+            $table->bigInteger('wallet_payee_id')->unsigned();
+            $table->bigInteger('transaction_category_id')->default(1)->unsigned();
+            $table->float('amount', 10, 2);
+            $table->string('description')->nullable();
             $table->timestamps();
 
-            $table->foreign('payer')->references('id')->on('users');
-            $table->foreign('payee')->references('id')->on('users');
+            $table->foreign('wallet_payer_id')->references('id')->on('wallets');
+            $table->foreign('wallet_payee_id')->references('id')->on('wallets');
             $table->foreign('transaction_category_id')->references('id')->on('transaction_categories');
         });
     }

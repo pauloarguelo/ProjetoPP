@@ -38,5 +38,12 @@ interface ServiceInterface
      * @return bool
      */
     public function delete(int $id): bool;
+
+    /**
+     * Find registers by param.
+     * @param string $param
+     * @param string $value
+     */
+    public function findByParam($param, $value): array;
     
 }

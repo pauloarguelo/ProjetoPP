@@ -27,7 +27,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     networks:
       - net-pp
-
+    ports:
+      - 3306:3306
   adminer:
     image: adminer
     restart: always

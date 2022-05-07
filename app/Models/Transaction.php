@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Wallet extends Model 
+class Transaction extends Model
 {
     use HasFactory;
 
@@ -17,8 +15,6 @@ class Wallet extends Model
      * @var string[]
      */
     protected $fillable = [
-        'balance'
+        'wallet_payer_id', 'wallet_payee_id', 'amount', 'description'
     ];
-
- 
 }

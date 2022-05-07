@@ -3,13 +3,19 @@
 namespace App\Http\Controllers\V1;
 
 use App\Exceptions\CustomValidationException;
-use App\Http\Controllers\Controller;
+use Laravel\Lumen\Routing\Controller as BaseController;
+
 use App\Services\User\UserService;
 use Illuminate\Http\Request;
 
 
-class AuthController extends Controller
-{
+class AuthController extends BaseController
+{   
+    /**
+     * @var UserService
+     */
+    protected $service;
+
     /**
      * Create a new AuthController instance.
      *
@@ -17,7 +23,7 @@ class AuthController extends Controller
      */
     public function __construct(UserService $service)
     {   
-        parent::__construct($service);
+        $this->service = $service;
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
@@ -126,6 +132,7 @@ class AuthController extends Controller
     {               
         try {
             $this->service->register($request->all());
+            return response()->json(['message' => 'Successfully registered']);
         } catch (CustomValidationException $e) {   
             return response()->json(['error' => $e->getMessage()], 400);
         }   
@@ -138,7 +145,8 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
-    {
+    {   
+        auth()->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
 

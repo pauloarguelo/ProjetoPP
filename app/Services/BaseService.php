@@ -63,4 +63,14 @@ abstract class BaseService implements ServiceInterface
     {
         return $this->repository->delete($id);
     }    
+
+    /**
+     * Find registers by param.
+     * @param string $param
+     * @param string $value
+     */
+    public function findByParam($param, $value): array
+    {
+        return $this->repository->findByParam($param, $value);
+    }
 }

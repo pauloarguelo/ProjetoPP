@@ -18,10 +18,10 @@ abstract class BaseRepository implements RepositoryInterface
      * @param int $limit
      * @param string $orderBy
      * @return array
-     */    
+     */
     public function findAll(int $limit = 10, string $orderBy): array
-    {        
-        return $this->model::orderBy($orderBy)->take($limit)->get()->toArray();        
+    {
+        return $this->model::orderBy($orderBy)->take($limit)->get()->toArray();
     }
 
     /**
@@ -41,8 +41,8 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function create(array $data): array
     {
-        return $this->model::create($data)->toArray();  
-    }   
+        return $this->model::create($data)->toArray();
+    }
 
     /**
      * Update a register.
@@ -51,18 +51,24 @@ abstract class BaseRepository implements RepositoryInterface
      * @return bool
      */
     public function update(int $id, array $data): bool
-    {   
-        //TODO: Implement update() method.
-       return true;
+    {
+        return $this->model::find($id)->update($data);
     }
 
     /**
      * Delete a register.
      */
     public function delete($id): bool
-    {   
-        return $this->model::destroy($id) ? true : false;  
+    {
+        return $this->model::destroy($id) ? true : false;
     }
     
-
+    /**
+     * Find registers by param.
+     */
+    public function findByParam($param, $value): array
+    {
+        $register = $this->model::where($param, $value)->get()->first();               
+        return $register ? $register->toArray() : [];
+    }
 }

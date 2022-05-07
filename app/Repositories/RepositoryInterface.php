@@ -19,6 +19,11 @@ interface RepositoryInterface
     public function findById(int $id): array;
 
     /**
+     * Find a register by param.
+     */
+    public function findByParam($param, $value): array;
+
+    /**
      * Create a new register.
      * @param array $data
      * @return array

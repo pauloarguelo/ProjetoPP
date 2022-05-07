@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Validators\AvailableBalanceValidator;
 use App\Validators\CnpjValidator;
 use App\Validators\CpfValidator;
 use Illuminate\Support\ServiceProvider;
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         CpfValidator::validate();
         CnpjValidator::validate();
+        AvailableBalanceValidator::validate();
     }
 
     /**

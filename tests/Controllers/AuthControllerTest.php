@@ -75,6 +75,9 @@ class AuthTest extends TestCase
         User::where('email', 'new-user-request@gmail.com')->delete();
     }
 
+    /**
+     * Test register user with wrong document
+     */
     public function test_register_new_user_with_wrong_document()
     {
         $parameters = [
