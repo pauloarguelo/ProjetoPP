@@ -38,5 +38,5 @@ interface ServiceInterface
      * @return bool
      */
     public function delete(int $id): bool;
-
+    
 }

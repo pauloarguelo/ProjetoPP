@@ -7,6 +7,7 @@ use Tests\TestCase;
 use App\Repositories\User\UserRepository;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class BaseServiceTest extends TestCase
 {   
@@ -37,10 +38,10 @@ class BaseServiceTest extends TestCase
     public function test_create_register(){
         
         $data = [
-            'name' => 'test',
-            'email' => 'teste@gmail.com',
-            'document' => '123456789',	
-            'password' => '123456',
+            'name' => 'Service User Test',
+            'email' => 'service-user-test@gmail.com',
+            'document' => '693.450.380-51',	
+            'password' => Hash::make('123456'),
             'user_category_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

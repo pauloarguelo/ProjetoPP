@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Repositories\RepositoryInterface;
+use Illuminate\Support\Arr;
 
 abstract class BaseService implements ServiceInterface
 {
@@ -61,5 +62,5 @@ abstract class BaseService implements ServiceInterface
     public function delete(int $id): bool
     {
         return $this->repository->delete($id);
-    }
+    }    
 }

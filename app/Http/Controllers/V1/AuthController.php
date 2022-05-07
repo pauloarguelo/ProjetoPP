@@ -125,9 +125,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {               
         try {
-            if($this->service->validateRegisterNewUser($request->all())){
-                $this->service->registerUser($request->all());
-            }  
+            $this->service->register($request->all());
         } catch (CustomValidationException $e) {   
             return response()->json(['error' => $e->getMessage()], 400);
         }   

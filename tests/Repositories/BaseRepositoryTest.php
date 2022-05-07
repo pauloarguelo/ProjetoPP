@@ -3,7 +3,7 @@
 namespace Tests\Repositories;
 
 use App\Models\User;
-use phpDocumentor\Reflection\Types\Void_;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
@@ -36,10 +36,10 @@ class BaseRepositoryTest extends TestCase
     public function test_create_register(){
         
         $data = [
-            'name' => 'test',
-            'email' => 'teste@gmail.com',
-            'document' => '123456789',	
-            'password' => '123456',
+            'name' => 'Repository Test User',
+            'email' => 'repository-teste-user@gmail.com',
+            'document' => '831.023.470-88',	
+            'password' => Hash::make('123456'),
             'user_category_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
