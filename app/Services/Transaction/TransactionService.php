@@ -8,6 +8,7 @@ use App\Exceptions\TransactionErrorException;
 use App\Jobs\SendNotificationEmail;
 use App\Repositories\Transaction\TransactionRepository;
 use App\Services\External\ExternalAuthorizerTransaction;
+use App\Services\Notification\NotificationService;
 use App\Services\Wallet\WalletService;
 use \Exception;
 use Illuminate\Bus\Dispatcher;
@@ -33,11 +34,17 @@ class TransactionService
      */
     protected $externalAuthorizationService;
 
+    /**
+     * @var NotificationService
+     */
+    protected $notificationService;
+
     public function __construct(TransactionRepository $repository, ExternalAuthorizerTransaction $externalAuthorizationService,
-    WalletService $walletService)
+    NotificationService $notificationService,WalletService $walletService)
     {
         $this->repository = $repository;
-        $this->walletService = $walletService;        
+        $this->walletService = $walletService;
+        $this->notificationService = $notificationService;        
         $this->externalAuthorizationService = $externalAuthorizationService;
     }
     
@@ -70,7 +77,7 @@ class TransactionService
             
                $result = $this->repository->create($data);
 
-               Queue::push(new SendNotificationEmail());
+               $this->notificationService->notifyUser($data['payee'], 'Transaction', 'Congratulations, you have received a transaction');	
                
                DB::commit();
 

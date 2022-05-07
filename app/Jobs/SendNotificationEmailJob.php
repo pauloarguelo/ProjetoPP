@@ -4,19 +4,21 @@ namespace App\Jobs;
 
 use App\Exceptions\ExternalRequestException;
 use App\Services\External\ExternalNotifier;
+use App\Services\Notification\NotificationService;
+use Illuminate\Support\Facades\App;
 
-class SendNotificationEmail extends Job
+class SendNotificationEmailJob extends Job
 {
-    protected $data;
+    protected $notificationId;
 
     /**
     * Create a new job instance.
     *
     * @return void
     */
-    public function __construct($data)
+    public function __construct($notificationId)
     {
-        $this->data;
+        $this->notificationId = $notificationId;
     }
 
     /**
@@ -26,11 +28,14 @@ class SendNotificationEmail extends Job
      */
     public function handle()
     {
-        $request = new ExternalNotifier();
+        $request = New ExternalNotifier();
+
         if ($request->request() != 200) {
             throw new ExternalRequestException('External request failed.');
         }
-                
+        $notificationService = App::make(NotificationService::class);
+        $notificationService->markNotificationAsDelivered($this->notificationId);
+        
         return true;
     }
 }

@@ -99,6 +99,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\TransactionServiceProvider::class);
 $app->register(App\Providers\WalletServiceProvider::class);
+$app->register(App\Providers\NotificationServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(PHPOpenSourceSaver\JWTAuth\Providers\LumenServiceProvider::class);
 /*

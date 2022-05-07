@@ -2,14 +2,12 @@
 
 namespace App\Providers;
 
-
-use App\Models\Wallet;
-use App\Repositories\Wallet\WalletRepository;
-use App\Services\Wallet\WalletService;
+use App\Models\Notification;
+use App\Repositories\Notification\NotificationRepository;
+use App\Services\Notification\NotificationService;
 use Illuminate\Support\ServiceProvider;
 
-
-class WalletServiceProvider extends ServiceProvider
+class NotificationServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -18,8 +16,8 @@ class WalletServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(WalletService::class, function ($app) {
-            return new WalletService(new WalletRepository(new Wallet()));
-         });
+        $this->app->bind(NotificationService::class, function ($app) {
+            return new NotificationService(new NotificationRepository(new Notification()));
+        });
     }
 }
