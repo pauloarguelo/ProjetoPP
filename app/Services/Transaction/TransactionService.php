@@ -5,10 +5,12 @@ namespace App\Services\Transaction;
 use App\Exceptions\CustomValidationException;
 use App\Exceptions\ExternalRequestException;
 use App\Exceptions\TransactionErrorException;
+use App\Jobs\SendNotificationEmail;
 use App\Repositories\Transaction\TransactionRepository;
 use App\Services\External\ExternalAuthorizerTransaction;
 use App\Services\Wallet\WalletService;
 use \Exception;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,12 +68,15 @@ class TransactionService
                 }
             
                $result = $this->repository->create($data);
+
+               dispatch(new SendNotificationEmail($result))->onQueue('emails');
                
                DB::commit();
 
                return $result;
 
             } catch (Exception  $e) {
+                dd($e->getMessage());
                 DB::rollBack();
                throw new CustomValidationException('A problem occurred while creating the transaction. Try again later.');
             }

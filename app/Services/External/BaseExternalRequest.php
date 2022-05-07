@@ -19,8 +19,8 @@ class BaseExternalRequest
             $client = new \GuzzleHttp\Client();
             $response = $client->request('GET', $this->url);
             return $response->getStatusCode();
-        } catch (\Exception $e) {
-            throw new ExternalRequestException('External request failed. '. $e->getMessage());
+        } catch (\Exception $e) {         
+             throw new ExternalRequestException('External request failed. '. $e->getMessage());
         }
     }
         

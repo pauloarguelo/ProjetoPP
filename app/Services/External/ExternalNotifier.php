@@ -6,6 +6,6 @@ class ExternalNotifier extends BaseExternalRequest
 {
     public function __construct()
     {
-        parent::__construct(env('EXTERNAL_NOTIFIER_PROVIDER'));
+        parent::__construct(env('EXTERNAL_NOTIFICATON_PROVIDER'));
     }
 }
