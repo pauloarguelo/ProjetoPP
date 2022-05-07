@@ -23,6 +23,8 @@ class NotificationService extends BaseService
         ]);
 
         dispatch(new SendNotificationEmailJob($notification['id']));
+
+        return $notification;
     }
 
     /**
