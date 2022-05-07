@@ -15,7 +15,7 @@ class UserService extends BaseService
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'document' => 'required|string|min:11|unique:users',
+            'document' => 'required|string|min:11|unique:users|cnpj',
             'user_category_id' => 'required|integer|exists:user_categories,id',
         ];
 
