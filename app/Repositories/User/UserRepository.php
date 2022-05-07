@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\User;
+
+use App\Repositories\BaseRepository;
 
 class UserRepository extends BaseRepository
 {
@@ -11,6 +13,6 @@ class UserRepository extends BaseRepository
      */
     public function createTest(array $data)
     {
-        return $this->model::create($data)->with('wallet');        
+        return $this->model::create($data)->wallet()->create(['balance' => 0]);        
     }  
 }

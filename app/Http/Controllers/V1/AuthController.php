@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\V1;
 
-use App\Exceptions\ValidationException;
+use App\Exceptions\CustomValidationException;
 use App\Http\Controllers\Controller;
-use App\Services\UserService;
+use App\Services\User\UserService;
 use Illuminate\Http\Request;
 
 
@@ -107,6 +107,7 @@ class AuthController extends Controller
      * @apiParam {String} name The user name.
      * @apiParam {String} email The user email.
      * @apiParam {String} password The user password.
+     * @apiParam {String} password_confirmation The user password confirmation.
      * @apiParam {String} document The user document.
      * @apiParam {Integer} user_category_id The user category id.
      * 
@@ -114,6 +115,7 @@ class AuthController extends Controller
      *           {
      *               "email":"paulo@teste.com",
      *               "password": "secret",
+     *               "password_confirmation": "secret",
      *               "name": "Paulo",
      *               "document": "09420900045",
      *               "user_category_id": 1
@@ -126,7 +128,7 @@ class AuthController extends Controller
             if($this->service->validateRegisterNewUser($request->all())){
                 $this->service->registerUser($request->all());
             }  
-        } catch (ValidationException $e) {   
+        } catch (CustomValidationException $e) {   
             return response()->json(['error' => $e->getMessage()], 400);
         }   
 

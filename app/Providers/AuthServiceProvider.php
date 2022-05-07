@@ -3,9 +3,8 @@
 namespace App\Providers;
 
 use App\Models\User;
-use App\Repositories\UserRepository;
-use App\Services\UserService;
-use Illuminate\Support\Facades\Gate;
+use App\Repositories\User\UserRepository;
+use App\Services\User\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

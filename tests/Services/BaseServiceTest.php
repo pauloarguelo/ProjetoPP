@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Repositories;
+namespace Tests\Services;
 
 use App\Models\User;
 use Tests\TestCase;
-use App\Repositories\UserRepository;
+use App\Repositories\User\UserRepository;
 use App\Services\BaseService;
 use Carbon\Carbon;
 

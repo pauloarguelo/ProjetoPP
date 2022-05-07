@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\User;
 
-use App\Exceptions\ValidationException;
-use Database\Factories\UserFactory;
+use App\Services\BaseService;
+use App\Exceptions\CustomValidationException;
 use Illuminate\Support\Facades\Validator;
+
 
 class UserService extends BaseService
 {
@@ -14,20 +15,20 @@ class UserService extends BaseService
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'document' => 'required|string|max:255|unique:users',
+            'document' => 'required|string|min:11|unique:users',
             'user_category_id' => 'required|integer|exists:user_categories,id',
         ];
 
         $validator = Validator::make($data, $rules);
         
         if($validator->fails()){
-            throw new ValidationException(join(", ", $validator->errors()->all()));
+            throw new CustomValidationException($validator->errors());
         }
 
         return true;
     }
     
     public function registerUser(array $data){
-       $this->repository->create($data);
+       return $this->repository->createTest($data);
     }
 }

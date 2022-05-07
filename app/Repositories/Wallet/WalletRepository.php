@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Wallet;
+
+use App\Repositories\BaseRepository;
 
 class WalletRepository extends BaseRepository
 {
