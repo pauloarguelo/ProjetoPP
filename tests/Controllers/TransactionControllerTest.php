@@ -22,7 +22,7 @@ class TransactionControllerTest extends TestCase
             'payee' => $payee->id,
             'description' => 'Peace of Cake'
         ]);
-
+        
         $this->seeStatusCode(200);
     }
 
