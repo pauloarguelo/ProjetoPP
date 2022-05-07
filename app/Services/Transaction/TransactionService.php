@@ -2,11 +2,14 @@
 
 namespace App\Services\Transaction;
 
-use App\Enums\TransactionCategoryEnum;
 use App\Exceptions\CustomValidationException;
+use App\Exceptions\ExternalRequestException;
+use App\Exceptions\TransactionErrorException;
 use App\Repositories\Transaction\TransactionRepository;
-use App\Services\User\UserService;
+use App\Services\External\ExternalAuthorizerTransaction;
 use App\Services\Wallet\WalletService;
+use \Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -23,39 +26,55 @@ class TransactionService
     protected $walletService;
 
     /**
-     * @var UserService
+     * @var ExternalAuthorizerTransaction
      */
-    protected $userService;
+    protected $externalAuthorizationService;
 
-    public function __construct(TransactionRepository $repository, WalletService $walletService, UserService $userService)
+    public function __construct(TransactionRepository $repository, ExternalAuthorizerTransaction $externalAuthorizationService,
+    WalletService $walletService)
     {
         $this->repository = $repository;
-        $this->walletService = $walletService;
-        $this->userService = $userService;
+        $this->walletService = $walletService;        
+        $this->externalAuthorizationService = $externalAuthorizationService;
     }
     
 
     public function create($data){
-        $user = auth()->user();
+        
       
         if($this->validateRequestData($data)){
 
+            try {
 
-            $PayerWallet = $this->walletService->findByParam('user_id', $data['payer']);
-            $PayeeWallet = $this->walletService->findByParam('user_id', $data['payee']);
+                DB::beginTransaction();
+
+                $PayerWallet = $this->walletService->findByParam('user_id', $data['payer']);
+                $PayeeWallet = $this->walletService->findByParam('user_id', $data['payee']);
             
-            $PayeeWallet['balance'] += floatval($data['amount']) ;
-            $PayerWallet['balance'] -= floatval($data['amount']);
+                $PayeeWallet['balance'] += floatval($data['amount']) ;
+                $PayerWallet['balance'] -= floatval($data['amount']);
 
-            $this->walletService->update($PayeeWallet['id'], $PayeeWallet);
-            $this->walletService->update($PayerWallet['id'], $PayerWallet);
+                $this->walletService->update($PayeeWallet['id'], $PayeeWallet);
+                $this->walletService->update($PayerWallet['id'], $PayerWallet);
 
   
-            $data['wallet_payer_id'] = $PayerWallet['id'];
-            $data['wallet_payee_id'] = $PayeeWallet['id'];
-            
+                $data['wallet_payer_id'] = $PayerWallet['id'];
+                $data['wallet_payee_id'] = $PayeeWallet['id'];
 
-            return $this->repository->create($data);
+                if (!$this->externalAuthorizationService->request() == 200) {
+                    throw new TransactionErrorException('Transaction failed');
+                }
+            
+               $result = $this->repository->create($data);
+               
+               DB::commit();
+
+               return $result;
+
+            } catch (Exception  $e) {
+                DB::rollBack();
+               throw new CustomValidationException('A problem occurred while creating the transaction. Try again later.');
+            }
             
         }
     }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests;
+namespace Tests\Controllers;
 
 use App\Enums\UserCategoryEnum;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
-class AuthTest extends TestCase
+class AuthControllerTest extends TestCase
 {
     /**
      * Test login success

@@ -27,6 +27,13 @@ class TransactionController extends BaseController
     public function new()
     {
         try {
+            
+            /*
+            if(auth()->user()->id != request()->get('payer')){	
+                throw new CustomValidationException('You are not allowed to make this transaction.');
+            }
+            */
+
             $this->service->create(request()->all());            
             return response()->json(['message' => 'Transaction created.'], 200);
         } catch (CustomValidationException $e) {   
