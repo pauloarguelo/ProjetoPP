@@ -25,6 +25,7 @@ sudo apt-get install make
 ## Runnig the project
 ```
 user@user:~$ git clone 
+user@user:~$ cp .env.example .env 
 user@user:~$ make up //docker-compose up
 user@user:~$ make migrate //docker exec -it api-php  php /app/artisan migrate:fresh --seed 
 ```
