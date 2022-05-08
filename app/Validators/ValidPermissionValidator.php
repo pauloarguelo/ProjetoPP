@@ -17,9 +17,9 @@ class ValidPermissionValidator implements ValidatorInterface
             if (empty($test)) {
                 return false;
             }
-            if(in_array($test['user_category_id'], [UserCategoryEnum::PRIVATE_PERSON])){
+            if (in_array($test['user_category_id'], [UserCategoryEnum::PRIVATE_PERSON])) {
                 return true;
-            }	
+            }
             return false;
         });
         

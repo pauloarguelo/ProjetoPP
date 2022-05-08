@@ -3,11 +3,11 @@
 namespace App\Repositories;
 
 interface RepositoryInterface
-{   
+{
     /**
      * Return all registers.
      * @param int $limit
-     * @param string $orderBy   
+     * @param string $orderBy
      */
     public function findAll(int $limit = 10, string $orderBy): array;
 

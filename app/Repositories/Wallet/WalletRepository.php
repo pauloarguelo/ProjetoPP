@@ -6,12 +6,12 @@ use App\Repositories\BaseRepository;
 
 class WalletRepository extends BaseRepository
 {
-    public function deposit(){
-
+    public function deposit()
+    {
     }
 
 
-    public function withdraw(){
-
+    public function withdraw()
+    {
     }
 }

@@ -28,7 +28,7 @@ class SendNotificationEmailJob extends Job
      */
     public function handle()
     {
-        $request = New ExternalNotifier();
+        $request = new ExternalNotifier();
 
         if ($request->request() != 200) {
             throw new ExternalRequestException('External request failed.');

@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Services;
+
 use App\Repositories\RepositoryInterface;
 use Illuminate\Support\Arr;
 
 abstract class BaseService implements ServiceInterface
 {
-    protected  $repository;
+    protected $repository;
 
     public function __construct(RepositoryInterface $repository)
     {
@@ -28,7 +29,7 @@ abstract class BaseService implements ServiceInterface
      * Find a register by id.
      * @param int $id
      * @return array
-     */     
+     */
     public function findById(int $id): array
     {
         return $this->repository->findById($id);
@@ -38,7 +39,7 @@ abstract class BaseService implements ServiceInterface
      * Create a new register.
      * @param array $data
      * @return array
-     */    
+     */
     public function create(array $data): array
     {
         return $this->repository->create($data);
@@ -48,7 +49,7 @@ abstract class BaseService implements ServiceInterface
      * Update a register.
      * @param int $id
      * @return bool
-     */     
+     */
     public function update(int $id, array $data): bool
     {
         return $this->repository->update($id, $data);
@@ -58,11 +59,11 @@ abstract class BaseService implements ServiceInterface
      * Delete a register.
      * @param int $id
      * @return bool
-     */     
+     */
     public function delete(int $id): bool
     {
         return $this->repository->delete($id);
-    }    
+    }
 
     /**
      * Find registers by param.

@@ -34,7 +34,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     /**
      * Validation Rules for the model.
-     * 
+     *
      * @var string[]
      */
     protected array $rules = [
@@ -45,8 +45,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'user_category_id' => 'required|integer|exists:user_categories,id',
     ];
 
-    public function wallet(){
-        return $this->hasOne(Wallet::class);    
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
     }
 
 
@@ -69,5 +70,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return [];
     }
-
 }

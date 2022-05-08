@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class TransactionCategory extends Model 
+class TransactionCategory extends Model
 {
     use HasFactory;
 
@@ -21,6 +21,4 @@ class TransactionCategory extends Model
     protected $fillable = [
         'description'
     ];
-
- 
 }

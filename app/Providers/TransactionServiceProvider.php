@@ -24,10 +24,12 @@ class TransactionServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(TransactionService::class, function ($app) {
-            return new TransactionService(new TransactionRepository(new Transaction()), 
-            new ExternalAuthorizerTransaction(),
-            New NotificationService(new NotificationRepository(new Notification())),
-            new WalletService(new WalletRepository(new Wallet())));
+            return new TransactionService(
+                new TransactionRepository(new Transaction()),
+                new ExternalAuthorizerTransaction(),
+                new NotificationService(new NotificationRepository(new Notification())),
+                new WalletService(new WalletRepository(new Wallet()))
+            );
         });
     }
 }

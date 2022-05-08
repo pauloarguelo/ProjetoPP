@@ -7,18 +7,17 @@ use App\Exceptions\CustomValidationException;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\UserCategoryEnum;
 
-
 class UserService extends BaseService
-{   
-    public function register(array $data){
-        if($this->validate($data)){
+{
+    public function register(array $data)
+    {
+        if ($this->validate($data)) {
             return $this->repository->create($data);
         }
     }
 
     public function validate(array $data)
     {
-
         $documentRule = $data['user_category_id'] == UserCategoryEnum::PRIVATE_PERSON ? 'cpf' : 'cnpj';
 
         $rules = [
@@ -31,11 +30,10 @@ class UserService extends BaseService
 
         $validator = Validator::make($data, $rules);
         
-        if($validator->fails()){
+        if ($validator->fails()) {
             throw new CustomValidationException($validator->errors());
         }
 
         return true;
     }
-    
 }

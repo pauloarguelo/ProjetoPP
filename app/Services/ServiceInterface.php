@@ -4,11 +4,11 @@ namespace App\Services;
 
 interface ServiceInterface
 {
-   /**
-     * Return all registers.
-     * @param int $limit
-     * @param string $orderBy   
-     */
+    /**
+      * Return all registers.
+      * @param int $limit
+      * @param string $orderBy
+      */
     public function findAll(int $limit = 10, string $orderBy): array;
 
     /**
@@ -45,5 +45,4 @@ interface ServiceInterface
      * @param string $value
      */
     public function findByParam($param, $value): array;
-    
 }

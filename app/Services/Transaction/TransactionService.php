@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Validator;
 
-
 class TransactionService
-{       
+{
     /**
      * @var TransactionRepository
      */
@@ -39,23 +38,24 @@ class TransactionService
      */
     protected $notificationService;
 
-    public function __construct(TransactionRepository $repository, ExternalAuthorizerTransaction $externalAuthorizationService,
-    NotificationService $notificationService,WalletService $walletService)
+    public function __construct(
+        TransactionRepository $repository,
+        ExternalAuthorizerTransaction $externalAuthorizationService,
+        NotificationService $notificationService,
+        WalletService $walletService
+    )
     {
         $this->repository = $repository;
         $this->walletService = $walletService;
-        $this->notificationService = $notificationService;        
+        $this->notificationService = $notificationService;
         $this->externalAuthorizationService = $externalAuthorizationService;
     }
     
 
-    public function create($data){
-        
-      
-        if($this->validateRequestData($data)){
-
+    public function create($data)
+    {
+        if ($this->validateRequestData($data)) {
             try {
-
                 DB::beginTransaction();
 
                 $PayerWallet = $this->walletService->findByParam('user_id', $data['payer']);
@@ -75,20 +75,18 @@ class TransactionService
                     throw new TransactionErrorException('Transaction failed');
                 }
             
-               $result = $this->repository->create($data);
+                $result = $this->repository->create($data);
 
-               $this->notificationService->notifyUser($data['payee'], 'Transaction', 'Congratulations, you have received a transaction');	
+                $this->notificationService->notifyUser($data['payee'], 'Transaction', 'Congratulations, you have received a transaction');
                
-               DB::commit();
+                DB::commit();
 
-               return $result;
-
+                return $result;
             } catch (Exception  $e) {
                 dd($e->getMessage());
                 DB::rollBack();
-               throw new CustomValidationException('A problem occurred while creating the transaction. Try again later.');
+                throw new CustomValidationException('A problem occurred while creating the transaction. Try again later.');
             }
-            
         }
     }
 
@@ -99,21 +97,19 @@ class TransactionService
      */
     public function validateRequestData(array $data)
     {
-
         $rules = [
-            'amount' => 'required|numeric|min:0.1',	    
+            'amount' => 'required|numeric|min:0.1',
             'payer' => 'required|integer|exists:users,id|availableBalance:amount|validPermission',
             'payee' => 'required|integer|different:payer|exists:users,id',
-            'description' => 'nullable|string|max:255',	
+            'description' => 'nullable|string|max:255',
         ];
 
         $validator = Validator::make($data, $rules);
         
-        if($validator->fails()){
+        if ($validator->fails()) {
             throw new CustomValidationException($validator->errors());
         }
 
         return true;
     }
-
 }

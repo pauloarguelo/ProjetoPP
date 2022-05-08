@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 
 class AvailableBalanceValidator implements ValidatorInterface
-{   
+{
     /**
      * Validate the balance of payer is greater than the amount requested.
      */

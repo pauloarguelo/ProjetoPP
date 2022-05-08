@@ -68,7 +68,7 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function findByParam($param, $value): array
     {
-        $register = $this->model::where($param, $value)->get()->first();               
+        $register = $this->model::where($param, $value)->get()->first();
         return $register ? $register->toArray() : [];
     }
 }
