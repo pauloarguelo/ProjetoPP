@@ -25,15 +25,18 @@ class TransactionController extends BaseController
      * @api {post} /transaction Transaction
      * @apiName Transaction
      * @apiGroup Transaction
+     * @apiVersion 1.0.0
      * 
      * @apiDescription Create a new transaction. Requires authentication.
      * 
      * @apiSampleRequest /api/v1/transaction
      * 
-     * @apiParam {float} amount The transaction amount.
-     * @apiParam {string} description The transaction description.
-     * @apiParam {int} payer_id The transaction payer id.
-     * @apiParam {int} payee_id The transaction payee id.
+     * @apibody {Number} amount The transaction amount.
+     * @apibody {string} description The transaction description.
+     * @apibody {Number} payer_id The transaction payer id.
+     * @apibody {Number} payee_id The transaction payee id.
+     * 
+     * @apiHeader {String} Authorization Bearer Token.
      * 
      * @apiParamExample {json} Request-Example:
      *           {
@@ -42,7 +45,11 @@ class TransactionController extends BaseController
      *              "payee" : 2,
      *              "description" : "Peace of Cake"
      *           }          
-     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *      {
+     *          "message": "Transaction created."
+     *      }
      */
     public function new()
     {

@@ -218,6 +218,28 @@
         }
       ]
     },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer Token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n {\n     \"message\": \"Transaction created.\"\n }",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "app/Http/Controllers/V1/TransactionController.php",
     "groupTitle": "Transaction"

@@ -38,8 +38,8 @@ class AuthController extends BaseController
      * 
      * @apiSampleRequest /api/v1/auth/login
      *
-     * @apiParam {String} [email] The user email.
-     * @apiParam {String} [password] The user password.
+     * @apibody {String} [email] The user email.
+     * @apibody {String} [password] The user password.
      * 
      * @apiParamExample {json} Request-Example:
      *           {
@@ -105,17 +105,18 @@ class AuthController extends BaseController
      * @api {post} /auth/register Register
      * @apiName Register
      * @apiGroup Auth
+     * @apiVersion 1.0.0
      * 
      * @apiDescription Register a new user
      * 
      * @apiSampleRequest /api/v1/auth/register
      * 
-     * @apiParam {String} name The user name.
-     * @apiParam {String} email The user email.
-     * @apiParam {String} password The user password.
-     * @apiParam {String} password_confirmation The user password confirmation.
-     * @apiParam {String} document The user document.
-     * @apiParam {Integer} user_category_id The user category id (1 - Personal, 2 - Jurical).
+     * @apibody {String} name The user name.
+     * @apibody {String} email The user email.
+     * @apibody {String} password The user password.
+     * @apibody {String} password_confirmation The user password confirmation.
+     * @apibody {String} document The user document.
+     * @apibody {Number} user_category_id The user category id (1 - Personal, 2 - Jurical).
      * 
      * @apiParamExample {json} Request-Example:
      *           {
