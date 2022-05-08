@@ -53,11 +53,17 @@ The command bellow will create the tables and the seeders:
 user@user:~$ make migrate //docker exec -it api-php  php /app/artisan 
 ```
 
+## Authentication
+
+The project is protected with JWT, so the user must be authenticated to access the transaction endpoint.
+
 ## Notifications Queue
 
 Another important feature of the project is the [Notifications Queue](https://laravel.com/docs/queues#notifications).
 
-All the complete transaction notifications are sent to the queue, and a Job is responsible for handling the notifications. 
+At the success of a transaction a simulation of notification is sent to the user's email.
+
+So the complete transaction notifications are sent to the queue, and a Job is responsible for handling the notifications. 
 
 If the external service is not available, the notification is sent to the queue again. This is a simple mechanism to avoid the missing notifications.
 
