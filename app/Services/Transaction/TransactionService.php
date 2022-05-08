@@ -43,8 +43,7 @@ class TransactionService
         ExternalAuthorizerTransaction $externalAuthorizationService,
         NotificationService $notificationService,
         WalletService $walletService
-    )
-    {
+    ) {
         $this->repository = $repository;
         $this->walletService = $walletService;
         $this->notificationService = $notificationService;
