@@ -29,7 +29,7 @@ user@user:~$ make up //docker-compose up
 user@user:~$ make migrate //docker exec -it api-php  php /app/artisan migrate:fresh --seed 
 ```
 ## Api Documentation
-For a better understanding of the project endpoints, you can check the docs : http://localhost:8000/api/docs
+For a better understanding of the project endpoints, you can check the docs : http://localhost:8000/doc/index.html
 
 
 ## Architecture
