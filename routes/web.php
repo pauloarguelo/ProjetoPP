@@ -42,5 +42,8 @@ $router->group (['prefix' => 'api/v1/transaction', 'namespace' => 'V1', 'middlew
       $router->post('/', 'TransactionController@new');
 });
 
+$router->group (['prefix' => 'api/v1/wallet', 'namespace' => 'V1', 'middleware' => 'auth' ], function () use ($router) {      
+      $router->get('/', 'WalletController@myWallet');
+});
 
 
